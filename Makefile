@@ -1,17 +1,17 @@
-.PHONY: all
-all: shared demo
+CC = gcc
+CFLAGS = -g -Wall
 
-.PHONY: shared
+generated = dynamic_loading overwrite-dl.so
+
+all: overwrite-dl.so dynamic_loading
+
 shared: overwrite-dl.so
+
 overwrite-dl.so: overwrite-dl.c
-	gcc -shared -fPIC overwrite-dl.c -o overwrite-dl.so -ldl
+	$(CC) $(CFLAGS) -shared -fPIC $< -o $@ -ldl
 
-.PHONY: demo
-demo: dynamic_loading
 dynamic_loading: dynamic_loading.c
-	gcc dynamic_loading.c -o dynamic_loading -ldl
+	$(CC) $(CFLAGS) $< -o $@ -ldl
 
-.PHONY: clean
 clean:
-	rm overwrite-dl.so
-	rm dynamic_loading
+	rm -f $(generated)

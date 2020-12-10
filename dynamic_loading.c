@@ -30,6 +30,6 @@ int main(int argc, char **argv) {
  
     go("goodbye");
     // cleanup
-    // free(decoded);
+    free(decoded);
     dlclose(handle);
 }
